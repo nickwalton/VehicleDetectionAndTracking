@@ -1,9 +1,9 @@
-# Vehicle Detection Project
+# Vehicle Detection 
 
 [//]: # (Image References)
 [image1]: ./pipeline_images/not_car_example.jpg
 [image2]: ./pipeline_images/car_example.jpg
-[image3]: ./examples/HOG_example.jpg
+[image3]: ./pipeline_images/HOG_example.jpg
 [image4]: ./pipeline_images/example_hog.jpg
 [image5]: ./pipeline_images/example_spatial.jpg
 [image6]: ./pipeline_images/histogram_image.jpg
@@ -15,11 +15,11 @@
 [image12]: ./pipeline_images/example_output2.jpg
 [video1]: ./project_video.mp4
 
-Using computer vision techniques and a sliding window approach to detect vehicles in a video stream. The code for this project is contained in the IPython notebook VehicleTracking.ipynb.
+Here I use traditional computer vision techniques to extract features from an image, train a classifer and detect vehicles in an image. The code for this project is contained in the IPython notebook VehicleTracking.ipynb.
 
 ### 1. Training Data
 
-The data I used for this project was provided by Udacity and included images from the GTI and also images extracted from the KITTI data set. The data is loaded in the first cell of the IPython notebook.
+The data I used for this project was provided by Udacity and included images from the GTI and also images extracted from the KITTI data set. The data is loaded and pre processed in the first cell of the IPython notebook.
 
 I started by reading in all the `vehicle` and `non-vehicle` images.  Here is an example of one of each of the `vehicle` and `non-vehicle` classes:
 
@@ -28,23 +28,22 @@ I started by reading in all the `vehicle` and `non-vehicle` images.  Here is an 
 
 ### 2. Feature Extraction
 
-Although in the past I've used convolutional neural networks to classify traffic signs and in similar situations to get a better understanding of traditional computer vision techniques I used feature extraction techniques such as Histogram Oriented Gradients (HOG) spatial binning and color histograms. My feature extraction functions were all defined in the second cell of my IPython notebook.
+Although in the past I've used convolutional neural networks to classify images, to get a better understanding of traditional computer vision techniques in this project I used feature extraction techniques such as Histogram Oriented Gradients (HOG) spatial binning and color histograms. My feature extraction functions were all defined in the second cell of my IPython notebook.
 
 The goal with feature extraction is to get meaningful features that can be used by the classifier (in my case a linear SVM) but not so many that it takes too long to train and run your image through the classifier. 
 
 #### Histogram Oriented Gradients
 
-Histogram Oriented Gradients is a method that essentially takes a variable number of pixels in a cell, for example 8x8 and computes the direction of the gradient for each pixel within that cell, or in other words to what side of the pixel is the pixel intensity increasing. For that 8x8 cell a histogram is computed of all these gradients and we the peak of the histogram is taken as the orient direction
+Histogram Oriented Gradients is a method that essentially takes a cell of pixels, for example 8x8 and computes the direction of the gradient for each pixel within that cell. For that 8x8 cell a histogram is computed of all these gradients and the peak of the histogram is taken as the orientation direction for that cell.
 
-I tried out several different combinations of parameters with my classifier and eventuallly decided on the following parameters for my pipeline based on the accuracy I got from my classifier:
+I tried out several different combinations of parameters with my classifier to see what would get the best accuracy and eventually decided on the following parameters:
 `orientations=12`
 `pixels_per_cell=(8, 8)` 
 `cells_per_block=(2, 2)`
 
 Here is an example using the green channel with these HOG parameters.
 
-<img src='./pipeline_images/hog_example.jpg' width="425"/> <img src='./pipeline_images/car_example.jpg' width="425"/>
-
+![alt text][image2] ![alt text][image3]
 
 #### Spatial Binning and Color Conversion
 

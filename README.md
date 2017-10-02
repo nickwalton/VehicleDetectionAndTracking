@@ -11,8 +11,8 @@
 [image8]: ./pipeline_images/sliding_window.jpg
 [image9]: ./pipeline_images/detected_vehicle.jpg
 [image10]: ./pipeline_images/heat_map.jpg
-[image11]: ./pipeline_images/example_output1.jpg
-[image12]: ./pipeline_images/example_output2.jpg
+[image11]: ./pipeline_images/example_output_1.jpg
+[image12]: ./pipeline_images/example_output_2.jpg
 [video1]: ./project_video.mp4
 
 Here I use traditional computer vision techniques to extract features from an image, train a classifer and detect vehicles in a video stream using a sliding window approach. The code for this project is contained in the IPython notebook VehicleTracking.ipynb.

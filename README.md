@@ -102,7 +102,6 @@ Overall I feel that my pipeline did fairly well for using only computer vision t
 
 ![alt text][image11]
 ![alt text][image12]
-![alt text][image13]
 
 
 ### Video Implementation

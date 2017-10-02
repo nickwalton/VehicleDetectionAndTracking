@@ -3,7 +3,7 @@
 [//]: # (Image References)
 [image1]: ./pipeline_images/not_car_example.jpg
 [image2]: ./pipeline_images/car_example.jpg
-[image3]: ./pipeline_images/HOG_example.jpg
+[image3]: ./pipeline_images/example_hog.jpg
 [image4]: ./pipeline_images/example_hog.jpg
 [image5]: ./pipeline_images/example_spatial.jpg
 [image6]: ./pipeline_images/histogram_image.jpg
@@ -47,14 +47,14 @@ Here is an example using the green channel with these HOG parameters.
 
 #### Spatial Binning and Color Conversion
 
-Using every pixel in an image is probably more information than we need, but there is still value in having pixel intensity information used in our classifier. For my classifier I tried out several different color space conversions and spatial binning parameters. I eventually decided on using the Y channel in the YCrCb color space and resizing the image to a 16x16 image. This kept much of the information about recognizing the feature while still minimizing the number of features it created. Here is an example of the original image and the resize image. 
+Using every pixel in an image is probably more information than we need, but there is still value in having pixel intensity information used in our classifier. For my classifier I tried out several different color space conversions and spatial binning parameters. I eventually decided on using the Y channel in the YCrCb color space and resizing the image to a 16x16 image. This kept much of the information that we use to recognize the object while still minimizing the number of features it created. Here is an example of the original image and the resize image. 
 
 ![alt text][image2] ![alt text][image5]
 
 
 #### Color Histogram
 
-One possible we could try and find an object in an image is through a technique called template matching. Essentially you have an example image and you try and match that image in the picture. This works if the image looks exactly like the template, but if there are small variations this method fails. However there is a simliar method that is a little more robust and can be useful for us. Instead of trying to match each pixel like in template matching we can take a histogram of the color and that can help us try and match similar objects in the picture. This has some potential downfalls, but it can be a useful feature to give the classiifer more information about the object. 
+One possible method of object detection we could potentially try is through a technique called template matching. Essentially you have an example image and you try and match that image in the picture pixel for pixel. This works if the image looks exactly like the template, but if there are small variations between the images this method fails. However, there is a simliar method that is more robust and can be useful for our classification purposes. Instead of trying to match each pixel like in template matching we can take a histogram of the color and use that to try and match similar objects in the picture. This has some potential downfalls, but it can be a useful feature to give the classiifer more information about the object. 
 
 Here is an example of the output of a color histogram on a car image:
 

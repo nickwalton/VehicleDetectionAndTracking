@@ -62,37 +62,36 @@ Here is an example of the output of a color histogram on a car image:
 
 #### Feature Normalization
 
-After all the selected features have been extracted from the image they are all concatenated into one feature vector. However before they are fed into the classifier they need to be normalized. Because they come from several different techniques their scale can be vastly different and without normalization it's possible for one feature to dominate another. Here we can see the feature vector plotted before and after normalization. 
+After all the selected features have been extracted from the image they are all concatenated into one feature vector. However, because they come from several different techniques their scale can be vastly different. Before they are fed into the classifier they need to be normalized because without normalization it's possible for one feature to dominate the others. Here we can see the feature vector plotted before and after normalization. 
 
 ![alt text][image7]
 
 ### 3. SVM Linear Classifier
 
-To classify the whether or not a selected window was a car or not I used a linear SVM classifier. A few other possibilities were tested, but a linear SVM was chosen for ease of training and also to help reduce the chance of overfitting possible with higher order dimension SVM's. 
+To classify whether or not a selected window contains a car or not I used a linear SVM classifier. A few other possibilities were tested, but a linear SVM was chosen for ease of training and also to help reduce the chance of overfitting possible with higher order dimension SVM's. 
 
 I randomly split the data into 70% training data and 30% test data and was able to achieve about 99% accuracy on the test set giving me confidence that my classifier was working as expected. This is all implemented in the 4th cell of my IPython notebook.
 
 ### Vehicle Detection
 
 #### Sliding Window
-Now we have a classifier that can take images and decide whether they are cars or not. But there is often multiple cars in an image and we need to know where the car is in the image. To do that we can implement a sliding window approach to look for where the cars are located. To do that I set up several sliding windows that search at different scales and different locations in the image. In general larger windows are used closer to the observing vehicle and smaller windows farther from the it. This section is implemented in cells five and six of my IPython notebook.
+Now we have a classifier that can take images and decide whether they are cars or not. But there are often multiple cars in an image and we need to know not just if the image contains a car, but where and how many. To do that I implement a sliding window approach to find the location and number of cars. To do that I set up several sliding windows that search at different scales and different locations in the image. In general larger windows are used closer to the observing vehicle and smaller windows farther from the it. This section is implemented in cells five and six of my IPython notebook.
 
-This was one of the most difficult sections for me. I had to spend a signifcant amount of time playing with the size, overlap and number of sliding windows to be able to get somewhat reliable detection. 
+This was one of the most difficult sections for me. I had to spend a significant amount of time playing with the size, overlap and number of sliding windows to be able to get mostly reliable detection. 
 
 Here is an example of just one of the sliding windows with a 50% overlap:
-
 
 ![alt text][image8]
 
 #### Classifying Sliding Window Images
 
-Ultimately I searched on six scales using YCrCb Y channel HOG features plus spatially binned color and histograms of color in the feature vector, to detect the vehicles in the sliding window. I usually got several detections and the image with bounding boxes might look like the following:
+Ultimately I searched on six scales using HOG on just the Y channel of a YCrCb color space image as well as a resized image and histograms of color to detect the vehicles in the sliding window. I usually got several detections and the image with bounding boxes would look like the following:
 
 ![alt text][image9]
 
 #### Merging Detections and Eliminating False Positives
 
-To eliminate false positives and also to merge overlapping detections of the same object I create a heat map with all the detected object bounding box. This is done in cell seven of the notebook. With the heat map we can set a threshold to elminate false detections and use the centroid of the heat objects to determine where vehicles are:
+To eliminate false positives and also to merge the overlapping detections of the same object I create a heat map with all the detected objects bounding box. This is done in cell seven of the notebook. This creates blobs that have "hotter" cells where more bounding boxes overlap and "cooler" cells where less or none do. With the heat map we can set a threshold to elminate false detections (cooler areas) and use the centroid of the heat objects to determine where vehicles are:
 
 ![alt text][image10]
 ---
@@ -118,7 +117,7 @@ Here's a [link to my video result](./output_video.mp4)
 
 #### 1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
 
-One of the weakest point in my project was the sliding window approach. Often a vehicle wasn't well detected or the bounding box was wobbly due to the placement of the sliding windows. And the more I increased the number of sliding windows the computation time greatly increased so simply increasing the sliding windows wasn't a good approach. What I could have done however to reduce that would be to implement a HOG across the whole image and then only draw upon that for features for each window. In fact that could probably have been done for spatial binning as well.
+One of the weakest points in my project was the sliding window approach. Often a vehicle wasn't well detected or the bounding box was wobbly due to the placement of the sliding windows. The more I increased the number of sliding windows the greater the computation expanded so simply increasing the sliding windows wasn't a good approach. What I could have done however to reduce that would be to implement a HOG across the whole image and then only draw upon that already computed HOG for HOG features for each window. That could probably have been done for spatial binning as well.
 
 The other thing I could have done is add more tracking algorithms so that the object is tracked across multiple frames. This could have helped the tracker from losing the car for some frames, reduced false detections further and also help the boxes stay more stable as the car moved across the scene. 
 

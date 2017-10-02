@@ -11,6 +11,8 @@
 [image8]: ./pipeline_images/sliding_window.jpg
 [image9]: ./pipeline_images/detected_vehicle.jpg
 [image10]: ./pipeline_images/heat_map.jpg
+[image11]: ./pipeline_images/example_output1.jpg
+[image12]: ./pipeline_images/example_output2.jpg
 [video1]: ./project_video.mp4
 
 Using computer vision techniques and a sliding window approach to detect vehicles in a video stream. The code for this project is contained in the IPython notebook VehicleTracking.ipynb.
@@ -74,7 +76,7 @@ I randomly split the data into 70% training data and 30% test data and was able 
 ### Vehicle Detection
 
 #### Sliding Window
-Now we have a classifier that can take images and decide whether they are cars or not. But there is often multiple cars in an image and we need to know where the car is in the image. To do that we can implement a sliding window approach to look for where the cars are located. To do that I set up several sliding windows that search at different scales and different locations in the image. In general larger windows are used closer to the observing vehicle and smaller windows farther from the it. 
+Now we have a classifier that can take images and decide whether they are cars or not. But there is often multiple cars in an image and we need to know where the car is in the image. To do that we can implement a sliding window approach to look for where the cars are located. To do that I set up several sliding windows that search at different scales and different locations in the image. In general larger windows are used closer to the observing vehicle and smaller windows farther from the it. This section is implemented in cells five and six of my IPython notebook.
 
 This was one of the most difficult sections for me. I had to spend a signifcant amount of time playing with the size, overlap and number of sliding windows to be able to get somewhat reliable detection. 
 
@@ -91,10 +93,19 @@ Ultimately I searched on six scales using YCrCb Y channel HOG features plus spat
 
 #### Merging Detections and Eliminating False Positives
 
-To eliminate false positives and also to merge overlapping detections of the same object I create a heat map with all the detected object bounding box. With the heat map we can set a threshold to elminate false detections and use the centroid of the heat objects to determine where vehicles are:
+To eliminate false positives and also to merge overlapping detections of the same object I create a heat map with all the detected object bounding box. This is done in cell seven of the notebook. With the heat map we can set a threshold to elminate false detections and use the centroid of the heat objects to determine where vehicles are:
 
 ![alt text][image10]
 ---
+
+### Pipeline Examples
+
+Overall I feel that my pipeline did fairly well for using only computer vision techniques. However there still is a lot to be desired and I would want to refine it a lot more before I let any self driving car make decisions based on it. 
+
+![alt text][image11]
+![alt text][image12]
+![alt text][image13]
+
 
 ### Video Implementation
 

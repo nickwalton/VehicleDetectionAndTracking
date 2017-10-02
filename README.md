@@ -1,4 +1,4 @@
-**Vehicle Detection Project**
+# Vehicle Detection Project
 
 [//]: # (Image References)
 [image1]: ./pipeline_images/not_car_example.jpg
